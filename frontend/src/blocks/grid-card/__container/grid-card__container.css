@@ -1,0 +1,9 @@
+.grid-card__container {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    margin: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}

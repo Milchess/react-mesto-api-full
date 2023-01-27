@@ -1,0 +1,39 @@
+.profile__avatar-button {
+    width: 120px;
+    height: 120px;
+    border: none;
+    border-radius: 50%;
+    margin-right: 30px;
+    padding: 0;
+    position: relative;
+}
+
+.profile__avatar-button:before {
+    background: rgba(0, 0, 0, .8) url('../../../images/updateAvatar.svg') no-repeat 50%;
+    background-size: 26px 26px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    content: "";
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.profile__avatar-button:hover:before {
+    opacity: 1;
+}
+
+@media screen and (max-width: 710px) {
+    .profile__avatar-button {
+        margin-right: 0;
+        margin-bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .profile__avatar-button {
+        margin-bottom: 28px;
+    }
+}

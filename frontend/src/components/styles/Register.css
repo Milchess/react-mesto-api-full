@@ -1,0 +1,28 @@
+.register__subtitle {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.register__signup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.signup__link {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin-left: 5px;
+}
+
+.signup__link:hover {
+    cursor: pointer;
+    opacity: .6;
+}

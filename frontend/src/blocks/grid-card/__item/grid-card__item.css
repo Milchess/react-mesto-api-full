@@ -1,0 +1,12 @@
+.grid-card__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 26px;
+}
+
+@media screen and (max-width: 320px) {
+    .grid-card__item {
+        margin-left: 21px;
+    }
+}

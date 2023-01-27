@@ -1,0 +1,19 @@
+.popup__user {
+    color: #000000;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    margin-bottom: 30px;
+    padding: 0 0 9px;
+}
+
+.popup__user:last-of-type {
+    margin-bottom: 48px;
+}
+
+.popup__user:focus {
+    box-shadow: 0 0 15px 5px #6690f0;
+}
