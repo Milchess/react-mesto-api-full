@@ -5,6 +5,9 @@ const Authorization = require('../errors/authorization');
 const NotFound = require('../errors/notFound');
 const BadRequest = require('../errors/badRequest');
 const Conflict = require('../errors/conflict');
+require('dotenv').config();
+
+const { NODE_ENV, JWT_SECRET = 'super-strong-secret' } = process.env;
 
 const getUsers = async (req, res, next) => {
   try {
@@ -116,7 +119,11 @@ const login = async (req, res, next) => {
 
     const isUserValid = await bcrypt.compare(password, user.password);
     if (isUserValid) {
-      const token = jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' });
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret',
+        { expiresIn: '7d' },
+      );
 
       res.send({ token });
     }

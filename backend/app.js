@@ -5,6 +5,7 @@ const rateLimit = require('express-rate-limit');
 const { celebrate, Joi, errors } = require('celebrate');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
+require('dotenv').config();
 
 const {
   login, createUser,
@@ -13,7 +14,7 @@ const auth = require('./middlewares/auth');
 const NotFound = require('./errors/notFound');
 const { regexUrl } = require('./constants');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, CONNECT = 'mongodb://localhost:27017/mestodb' } = process.env;
 const app = express();
 
 const limiter = rateLimit({
@@ -79,7 +80,7 @@ app.use((err, req, res, next) => {
 });
 
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/mestodb');
+  await mongoose.connect(CONNECT);
   await app.listen(PORT);
   console.log(`Сервер запущен на ${PORT} порту`);
 }
