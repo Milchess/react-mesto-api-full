@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { celebrate, Joi, errors } = require('celebrate');
+const cors = require('cors');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
 require('dotenv').config();
@@ -12,7 +13,8 @@ const {
 } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFound = require('./errors/notFound');
-const { regexUrl } = require('./constants');
+const { regexUrl, allowedCors } = require('./constants');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000, CONNECT = 'mongodb://localhost:27017/mestodb' } = process.env;
 const app = express();
@@ -28,6 +30,17 @@ app.disable('x-powered-by');
 app.use(limiter);
 app.use(helmet());
 app.use(express.json());
+app.use(requestLogger);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (allowedCors.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Вы не прошли CORS проверку'));
+    }
+  },
+}));
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -71,6 +84,7 @@ app.all('*', (req, res, next) => {
   }
 });
 
+app.use(errorLogger);
 app.use(errors());
 
 app.use((err, req, res, next) => {
