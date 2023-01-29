@@ -4,12 +4,11 @@ class Api extends React.Component {
     constructor(props) {
         super(props);
 
-        this._baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-51/';
+        this._baseUrl = 'http://api.milchess.nomoredomainsclub.ru/';
         this._headers = {
-            authorization: '38f4a1b9-fdca-415d-86b5-0f7384ead109',
+            authorization: `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'
         }
-        this._baseUrlAuth = 'https://auth.nomoreparties.co/';
     }
 
     _get(link) {
@@ -94,7 +93,7 @@ class Api extends React.Component {
     }
 
     setRegistration(model) {
-        return fetch(`${this._baseUrlAuth}signup`, {
+        return fetch(`${this._baseUrl}signup`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(model)
@@ -103,7 +102,7 @@ class Api extends React.Component {
     }
 
     getAuthorization(model) {
-        return fetch(`${this._baseUrlAuth}signin`, {
+        return fetch(`${this._baseUrl}signin`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(model)
@@ -112,7 +111,7 @@ class Api extends React.Component {
     }
 
     getValidationToken() {
-        return fetch(`${this._baseUrlAuth}users/me`, {
+        return fetch(`${this._baseUrl}users/me`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

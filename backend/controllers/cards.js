@@ -60,7 +60,7 @@ const likeCard = async (req, res, next) => {
     if (!card) {
       next(new NotFound('Карточка с указанным id не найдена'));
     } else {
-      res.send({ message: 'Лайк карточке поставлен' });
+      res.send(card);
     }
   } catch (err) {
     if (err.name === 'CastError') {
@@ -81,7 +81,7 @@ const dislikeCard = async (req, res, next) => {
     if (!card) {
       next(new NotFound('Карточка с указанным id не найдена'));
     } else {
-      res.send({ message: 'Лайк удален у карточки' });
+      res.send(card);
     }
   } catch (err) {
     if (err.name === 'CastError') {
