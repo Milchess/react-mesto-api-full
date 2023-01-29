@@ -8,3 +8,7 @@
 Фронтенд: https://github.com/Milchess/react-mesto-auth <br>
 Бэкенд: https://github.com/Milchess/express-mesto-gha
 ------
+
+IP  51.250.25.171 <br>
+Backend  https://api.milchess.nomoredomainsclub.ru <br>
+Frontend  https://milchess.nomoredomainsclub.ru
