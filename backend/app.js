@@ -77,11 +77,7 @@ app.use(userRoutes);
 app.use(cardRoutes);
 
 app.all('*', (req, res, next) => {
-  try {
-    next(new NotFound('Страница не найдена'));
-  } catch (err) {
-    next(err);
-  }
+  next(new NotFound('Страница не найдена'));
 });
 
 app.use(errorLogger);

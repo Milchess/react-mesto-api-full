@@ -9,7 +9,7 @@ const auth = (req, res, next) => {
   const { authorization } = req.headers;
   try {
     if (!authorization || !authorization.startsWith('Bearer ')) {
-      next(new Authorization('Необходима авторизация'));
+      return next(new Authorization('Необходима авторизация'));
     }
     const token = authorization.replace('Bearer ', '');
     payload = jwt.verify(
@@ -17,10 +17,10 @@ const auth = (req, res, next) => {
       NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret',
     );
   } catch (err) {
-    next(new Authorization('Необходима авторизация'));
+    return next(new Authorization('Необходима авторизация'));
   }
   req.user = payload;
-  next();
+  return next();
 };
 
 module.exports = auth;

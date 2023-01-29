@@ -114,7 +114,7 @@ const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
-      next(new Authorization('Пользователь не найден'));
+      return next(new Authorization('Пользователь не найден'));
     }
 
     const isUserValid = await bcrypt.compare(password, user.password);
@@ -125,11 +125,11 @@ const login = async (req, res, next) => {
         { expiresIn: '7d' },
       );
 
-      res.send({ token });
+      return res.send({ token });
     }
-    next(new Authorization('Неверный логин или пароль'));
+    return next(new Authorization('Неверный логин или пароль'));
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
