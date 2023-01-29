@@ -5,7 +5,7 @@ const Forbidden = require('../errors/forbidden');
 
 const getCards = async (req, res, next) => {
   try {
-    const cards = await Card.find({});
+    const cards = await Card.find({}).populate(['owner', 'likes']);
     res.send(cards);
   } catch (err) {
     next(err);
@@ -13,18 +13,18 @@ const getCards = async (req, res, next) => {
 };
 
 const createCard = async (req, res, next) => {
-  try {
-    const card = await Card.create({
-      owner: req.user._id, ...req.body,
+  await Card.create({
+    owner: req.user, ...req.body,
+  })
+    .then((card) => Card.populate(card, 'owner'))
+    .then((card) => res.send(card))
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequest('Переданы неккоректные данные'));
+      } else {
+        next(err);
+      }
     });
-    res.send(card);
-  } catch (err) {
-    if (err.name === 'ValidationError') {
-      next(new BadRequest('Переданы неккоректные данные'));
-    } else {
-      next(err);
-    }
-  }
 };
 
 const deleteCard = async (req, res, next) => {
@@ -53,7 +53,7 @@ const likeCard = async (req, res, next) => {
       req.params.cardId,
       { $addToSet: { likes: req.user._id } },
       { new: true },
-    );
+    ).populate(['owner', 'likes']);
     if (!card) {
       next(new NotFound('Карточка с указанным id не найдена'));
     } else {
@@ -74,7 +74,7 @@ const dislikeCard = async (req, res, next) => {
       req.params.cardId,
       { $pull: { likes: req.user._id } },
       { new: true },
-    );
+    ).populate(['owner', 'likes']);
     if (!card) {
       next(new NotFound('Карточка с указанным id не найдена'));
     } else {
